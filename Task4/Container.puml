@@ -10,15 +10,18 @@ System_Boundary(clients, "Clients") {
     Container(bank, "Интернет-банк", "ASP.NET")
 }
 
+Container(bank, "Интернет-банк", "ASP.NET")
 Container(call, "Система кол-центра")
 Container(abc, "АБС")
+
+Container(export, "Экспорт актуальных ставок")
 
 Container(broker, "Broker", "Kafka")
 
 ContainerDb(bank_db, "Интернет-банк DB", "MySQL")
 
 System_Ext(sms, "SMS")
-
+System_Ext(call_ext, "Партнерский кол-центр", "")
 
 Rel(user, web, "")
 Rel(user, bank, "")
@@ -30,6 +33,10 @@ Rel(bank, broker, "Запрос", "JSON/HTTPS")
 Rel(bank, bank_db, "Запрос", "SQL/TCP")
 
 Rel(broker, abc, "Запрос", "JSON/HTTPS")
+
+Rel(export, call, "Отправка файла", "SFTP")
+Rel(export, call_ext, "Отправка файла", "SFTP")
+Rel(export, abc, "Запрос для формирования файла", "SQL/TCP")
 
 Rel(abc, sms, "Запрос", "JSON/HTTPS")
 
