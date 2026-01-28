@@ -1,0 +1,35 @@
+@startuml Sky1
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+title Container diagram
+
+Person(user, "User")
+
+
+System_Boundary(clients, "Clients") {
+    Container(web, "Сайт", "PHP/React.js")
+    Container(bank, "Интернет-банк", "ASP.NET")
+}
+
+Container(call, "Система кол-центра")
+Container(abc, "АБС")
+
+Container(broker, "Broker", "Kafka")
+
+ContainerDb(bank_db, "Интернет-банк DB", "MySQL")
+
+System_Ext(sms, "SMS")
+
+
+Rel(user, web, "")
+Rel(user, bank, "")
+
+Rel(web, call, "Запрос", "JSON/HTTPS")
+Rel(call, broker, "Запрос", "JSON/HTTPS")
+
+Rel(bank, broker, "Запрос", "JSON/HTTPS")
+Rel(bank, bank_db, "Запрос", "JSON/HTTPS")
+
+Rel(broker, abc, "Запрос", "JSON/HTTPS")
+
+Rel(abc, sms, "Запрос", "JSON/HTTPS")
+
