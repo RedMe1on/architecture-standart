@@ -1,0 +1,18 @@
+@startuml MVPContext
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+' skinparam wrapWidth 300
+' skinparam linetype ortho
+skinparam linetype polyline
+'LAYOUT_LANDSCAPE()
+  
+Person(user, "Пользователь ", "Заявка на открытие депозита")
+
+System(deposit, "Сервис открытия депозитов", "")
+    
+System_Ext(sms, "SMS Telecom", "")
+System_Ext(call, "Партнерский кол-центр", "")
+' Деплой приложения 
+Rel(user, deposit, "Оформляет заявку", "HTTPS")
+Rel(deposit, sms, "Отправляет sms", "HTTPS")
+Rel(deposit, call, "Отправляет файл", "SFTP")
+@enduml
